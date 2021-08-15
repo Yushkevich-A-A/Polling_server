@@ -17,7 +17,6 @@ class CreateNewMassages {
     startTimerMessages() {
         this.timer = setInterval(() => {
             const message = this.createMessage();
-            console.log(message);
             this.messages.push(message)
         }, Math.round(Math.random() * 30) * 1000)
     }
