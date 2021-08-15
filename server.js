@@ -5,6 +5,9 @@ const Router = require('koa-router');
 const json = require('koa-json');
 const router = new Router();
 const uuid = require('uuid');
+const { CreateNewMassages } = require('./CreateNewMassages/CreateNewMassages');
+
+const createNewMessages = new CreateNewMassages();
 
 app.use(json());
 
@@ -42,6 +45,17 @@ app.use( async (ctx, next) => {
 
 const port = process.env.PORT || 7070;
 const server = http.createServer(app.callback());
+
+router.get('/messages/unread', (ctx) => {
+  
+  ctx.response.body = {
+    status: 'ок',
+    timestamp: Date.now(),
+    messages: createNewMessages.getUnreadMessages(),
+  }
+
+  createNewMessages.clearArrMessages();
+})
 
 
 app.use(router.routes());
